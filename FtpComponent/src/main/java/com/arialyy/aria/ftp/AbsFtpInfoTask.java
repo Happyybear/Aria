@@ -303,10 +303,14 @@ public abstract class AbsFtpInfoTask<ENTITY extends AbsEntity, TASK_WRAPPER exte
    *
    * @throws IOException 字符串编码转换错误
    */
-  protected long getFileSize(FTPFile[] files, FTPClient client, String dirName) throws IOException {
+  protected long 
+  ileSize(FTPFile[] files, FTPClient client, String dirName) throws IOException {
     long size = 0;
     String path = dirName + "/";
     for (FTPFile file : files) {
+      if (".".endsWith(file.getName()) || "..".endsWith(file.getName())){
+        continue;
+      }
       if (file.isFile()) {
         size += file.getSize();
         handleFile(client, path + file.getName(), file);
